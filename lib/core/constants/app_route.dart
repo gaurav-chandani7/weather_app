@@ -29,9 +29,9 @@ Map<String, WidgetBuilder> routes = {
         },
         child: const SizedBox(),
       ),
-  Routes.login.path: (context) => LoginScreen(),
+  Routes.login.path: (context) => const LoginScreen(),
   Routes.register.path: (context) => BlocProvider(
-      create: (context) => sl<RegisterCubit>(), child: RegisterScreen()),
+      create: (context) => sl<RegisterCubit>(), child: const RegisterScreen()),
   Routes.home.path: (context) => Parent(
         child: Center(
           child: ElevatedButton(
@@ -39,7 +39,7 @@ Map<String, WidgetBuilder> routes = {
                 sl<AuthCubit>().logout();
                 context.pushReplacementNamed(Routes.login.path);
               },
-              child: Text("Logout")),
+              child: const Text("Logout")),
         ),
       )
 };
