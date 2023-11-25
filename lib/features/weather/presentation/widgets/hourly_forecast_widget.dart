@@ -10,7 +10,7 @@ class HourlyForecastWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
       child: Container(
-        height: 200,
+        height: 170,
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
             color: Colors.brown.shade200,
