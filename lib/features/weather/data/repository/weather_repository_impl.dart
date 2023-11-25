@@ -3,6 +3,7 @@ import 'package:weather_app/core/error/failure.dart';
 import 'package:weather_app/features/weather/data/data_sources/location_data_source.dart';
 import 'package:weather_app/features/weather/data/data_sources/open_weather_data_source.dart';
 import 'package:weather_app/features/weather/domain/entities/current_weather.dart';
+import 'package:weather_app/features/weather/domain/entities/daily_forecast.dart';
 import 'package:weather_app/features/weather/domain/entities/hourly_forecast.dart';
 import 'package:weather_app/features/weather/domain/entities/local_location.dart';
 import 'package:weather_app/features/weather/domain/entities/location_params.dart';
@@ -37,5 +38,11 @@ class WeatherRepositoryImpl implements WeatherRepository {
   Future<Either<Failure, HourlyForecastEntity>> getHourlyForecast(
       LocationParams locationParams) {
     return _openWeatherMapDataSource.getHourlyForecast(locationParams);
+  }
+
+  @override
+  Future<Either<Failure, DailyForecastEntity>> getDailyForecast(
+      LocationParams locationParams) {
+    return _openWeatherMapDataSource.getDailyForecast(locationParams);
   }
 }

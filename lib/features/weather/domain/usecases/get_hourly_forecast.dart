@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:weather_app/core/error/failure.dart';
 import 'package:weather_app/core/usecase/usecase.dart';
 import 'package:weather_app/features/weather/domain/entities/entities.dart';
-import 'package:weather_app/features/weather/domain/entities/hourly_forecast.dart';
 import 'package:weather_app/features/weather/domain/repository/repository.dart';
 
 class GetHourlyForecast

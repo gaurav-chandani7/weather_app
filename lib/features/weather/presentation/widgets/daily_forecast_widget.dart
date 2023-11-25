@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/features/weather/domain/entities/hourly_forecast.dart';
+import 'package:weather_app/features/weather/domain/entities/daily_forecast.dart';
 
-class HourlyForecastWidget extends StatelessWidget {
-  const HourlyForecastWidget({super.key, required this.hourlyForecast});
-  final HourlyForecastEntity hourlyForecast;
-
+class DailyForecastWidget extends StatelessWidget {
+  const DailyForecastWidget({super.key, required this.dailyForecast});
+  final DailyForecastEntity dailyForecast;
+  final List<String> weekdays3letterlist = const [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun'
+  ];
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       child: Container(
-        height: 170,
+        height: 420,
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
             color: Colors.brown.shade200,
@@ -27,14 +35,14 @@ class HourlyForecastWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    Icons.watch_later_outlined,
+                    Icons.calendar_month,
                     size: 18,
                   ),
                   SizedBox(
                     width: 5,
                   ),
                   Text(
-                    "HOURLY FORECAST",
+                    "7-DAY FORECAST",
                     style: TextStyle(fontSize: 12),
                   ),
                 ],
@@ -47,38 +55,29 @@ class HourlyForecastWidget extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: hourlyForecast.list.length,
-                  shrinkWrap: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: dailyForecast.list.length,
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    var item = hourlyForecast.list[index];
+                    var item = dailyForecast.list[index];
                     var date =
                         DateTime.fromMillisecondsSinceEpoch(item.dt * 1000);
-                    var hour = (date.hour == 0 || date.hour == 12)
-                        ? 12
-                        : (date.hour % 12);
-                    var ampm = (date.hour == 0 || date.hour < 12) ? 'AM' : 'PM';
+                    var formattedDay = weekdays3letterlist[date.weekday - 1];
                     return SizedBox(
                       width: 100,
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          RichText(
-                            text: TextSpan(
-                                text: index != 0 ? '$hour' : 'Now',
-                                style: const TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                                children: index != 0
-                                    ? [
-                                        TextSpan(
-                                            text: ampm,
-                                            style:
-                                                const TextStyle(fontSize: 12))
-                                      ]
-                                    : null),
+                          Text(
+                            index == 0 ? 'Today' : formattedDay,
+                            style: const TextStyle(fontSize: 15),
                           ),
                           Image.network(
                               "https://openweathermap.org/img/wn/${item.weather.first.icon}.png"),
-                          Text("${item.main.temp.round()}°")
+                          Text(
+                            "${item.temp.min.round()}° - ${item.temp.max.round()}°",
+                            style: const TextStyle(fontSize: 15),
+                          )
                         ],
                       ),
                     );

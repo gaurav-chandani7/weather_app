@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/core.dart';
 import 'package:weather_app/dependencies_injection.dart';
 import 'package:weather_app/features/features.dart';
+import 'package:weather_app/features/weather/presentation/widgets/daily_forecast_widget.dart';
 
 class CurrentLocationWeatherScreen extends StatelessWidget {
   const CurrentLocationWeatherScreen({super.key});
@@ -17,8 +18,7 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is CurrentWeatherSuccess) {
               var currentWeather = state.currentWeatherEntity!;
-              return Container(
-                alignment: Alignment.center,
+              return SingleChildScrollView(
                 child: Column(
                   children: [
                     Text(
@@ -55,7 +55,7 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Column(
                         children: [
                           Row(
@@ -108,10 +108,27 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
                     ),
                     BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
                         builder: (context, state) {
-                      if (state is HourlyForecastSuccess) {
+                      var hourlyWidgetState = state.hourlyWidgetState;
+                      if (hourlyWidgetState is HourlyForecastSuccess) {
                         return HourlyForecastWidget(
-                          hourlyForecast: state.hourlyForecastEntity!,
+                          hourlyForecast:
+                              hourlyWidgetState.hourlyForecastEntity,
                         );
+                      }
+                      if (hourlyWidgetState is HourlyForecastLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return const SizedBox();
+                    }),
+                    BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
+                        builder: (context, state) {
+                      var dailyWidgetState = state.dailyWidgetState;
+                      if (dailyWidgetState is DailyForecastSuccess) {
+                        return DailyForecastWidget(
+                            dailyForecast:
+                                dailyWidgetState.dailyForecastEntity);
                       }
                       return const SizedBox();
                     })

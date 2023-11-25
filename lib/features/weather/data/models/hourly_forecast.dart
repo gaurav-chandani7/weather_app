@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
+import 'package:weather_app/features/weather/data/models/models.dart';
 import 'package:weather_app/features/weather/domain/entities/hourly_forecast.dart';
-import 'package:weather_app/features/weather/weather.dart';
 
 class HourlyForecastModel extends HourlyForecastEntity {
   HourlyForecastModel({
