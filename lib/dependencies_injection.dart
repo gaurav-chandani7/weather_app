@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:location/location.dart';
 import 'package:weather_app/features/features.dart';
+import 'package:weather_app/features/weather/presentation/cubit/multi_region/multi_region_cubit.dart';
 
 GetIt sl = GetIt.instance;
 
@@ -44,4 +45,5 @@ void _cubit() {
   sl.registerLazySingleton(() => AuthCubit(sl(), sl(), sl()));
   sl.registerFactory(() => RegisterCubit(sl()));
   sl.registerFactory(() => CurrentWeatherCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => MultiRegionCubit(sl()));
 }

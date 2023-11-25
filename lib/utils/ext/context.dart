@@ -3,16 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 extension ContextExtensions on BuildContext {
-  // Future<dynamic> goTo(String routeName, {Object? args}) =>
-  //     Navigator.pushNamed(this, routeName, arguments: args);
-
-  // Future<dynamic> goToReplace(String routeName, {Object? args}) =>
-  //     Navigator.pushReplacementNamed(this, routeName, arguments: args);
-
-  // Future<dynamic> goToClearStack(String routeName, Object? args) =>
-  //     Navigator.pushNamedAndRemoveUntil(this, routeName, (route) => false,
-  //         arguments: args);
-
   Future<void> showLoading() => showDialog(
         context: this,
         barrierDismissible: false,
@@ -45,5 +35,9 @@ extension ContextExtensions on BuildContext {
 
   void pushNamed(String routeName, {Object? args}) {
     Navigator.of(this).pushNamed(routeName);
+  }
+
+  void push(Widget widget) {
+    Navigator.of(this).push(MaterialPageRoute(builder: (context) => widget));
   }
 }

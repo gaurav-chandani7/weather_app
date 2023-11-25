@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/dependencies_injection.dart';
 import 'package:weather_app/features/auth/presentation/presentation.dart';
+import 'package:weather_app/features/weather/presentation/pages/current_location_weather_screen.dart';
 import 'package:weather_app/features/weather/presentation/pages/home.dart';
 import 'package:weather_app/features/weather/presentation/pages/multi_region_screen.dart';
 import 'package:weather_app/utils/utils.dart';
@@ -10,6 +11,7 @@ enum Routes {
   root('/'),
 
   home('/home'),
+  currentWeather('/home/currentWeather'),
   multiRegion('/home/multiRegion'),
 
   login("/auth/login"),
@@ -33,16 +35,7 @@ Map<String, WidgetBuilder> routes = {
   Routes.login.path: (context) => const LoginScreen(),
   Routes.register.path: (context) => BlocProvider(
       create: (context) => sl<RegisterCubit>(), child: const RegisterScreen()),
-  // Routes.home.path: (context) => Parent(
-  //       child: Center(
-  //         child: ElevatedButton(
-  //             onPressed: () {
-  //               sl<AuthCubit>().logout();
-  //               context.pushReplacementNamed(Routes.login.path);
-  //             },
-  //             child: const Text("Logout")),
-  //       ),
-  //     )
   Routes.home.path: (context) => const Home(),
-  Routes.multiRegion.path: (context) => const MultiRegionScreen()
+  Routes.multiRegion.path: (context) => const MultiRegionScreen(),
+  Routes.currentWeather.path: (context) => const CurrentLocationWeatherScreen()
 };

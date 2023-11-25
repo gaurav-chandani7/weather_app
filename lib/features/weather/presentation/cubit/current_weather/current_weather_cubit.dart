@@ -15,22 +15,28 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
   final GetMyLocationDataUseCase _getMyLocationData;
   final GetHourlyForecast _getHourlyForecastUseCase;
   final GetDailyForecastUseCase _getDailyForecastUseCase;
-  LocalLocationEntity? localLocationData;
+  LocationParams? locationParamsData;
 
   requestLocationAndGetWeather() async {
     var locationData = await _getMyLocationData(null);
     locationData.fold((failure) {
       _requestLocationFailure(failure);
     }, (locationData) async {
-      localLocationData = locationData;
+      locationParamsData = LocationParams(
+          lat: locationData.latitude, lon: locationData.longitude);
       emit(CurrentWeatherLoading());
-      _getWeather(locationData);
+      _getWeather(locationParamsData!);
     });
   }
 
-  _getWeather(LocalLocationEntity locationData) async {
-    var res = await _getCurrentWeatherUseCase(LocationParams(
-        lat: locationData.latitude, lon: locationData.longitude));
+  getWeatherFromDifferentLocation(LocationParams locationData) {
+    locationParamsData = locationData;
+    emit(CurrentWeatherLoading());
+    _getWeather(locationData);
+  }
+
+  _getWeather(LocationParams locationData) async {
+    var res = await _getCurrentWeatherUseCase(locationData);
     res.fold(
         (apiFailure) => emit(const CurrentWeatherFailure('Unable to get data')),
         (weatherData) {
@@ -52,13 +58,12 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
   }
 
   _getHourlyForecast() async {
-    if (localLocationData != null) {
+    if (locationParamsData != null) {
       emit(CurrentWeatherSuccess(
           currentWeatherEntity: state.currentWeatherEntity,
           dailyWidgetState: state.dailyWidgetState,
           hourlyWidgetState: HourlyForecastLoading()));
-      var res = await _getHourlyForecastUseCase(LocationParams(
-          lat: localLocationData!.latitude, lon: localLocationData!.longitude));
+      var res = await _getHourlyForecastUseCase(locationParamsData!);
       res.fold(
           (apiFailure) => emit(CurrentWeatherSuccess(
               currentWeatherEntity: state.currentWeatherEntity,
@@ -73,13 +78,12 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
   }
 
   _getDailyForecast() async {
-    if (localLocationData != null) {
+    if (locationParamsData != null) {
       emit(CurrentWeatherSuccess(
           currentWeatherEntity: state.currentWeatherEntity,
           hourlyWidgetState: state.hourlyWidgetState,
           dailyWidgetState: DailyForecastLoading()));
-      var res = await _getDailyForecastUseCase(LocationParams(
-          lat: localLocationData!.latitude, lon: localLocationData!.longitude));
+      var res = await _getDailyForecastUseCase(locationParamsData!);
       res.fold(
           (failure) => emit(CurrentWeatherSuccess(
               currentWeatherEntity: state.currentWeatherEntity,

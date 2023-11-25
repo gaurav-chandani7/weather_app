@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/constants/constants.dart';
 import 'package:weather_app/core/widgets/widgets.dart';
+import 'package:weather_app/dependencies_injection.dart';
+import 'package:weather_app/features/auth/presentation/cubit/login/auth_cubit.dart';
 import 'package:weather_app/features/weather/presentation/pages/current_location_weather_screen.dart';
 import 'package:weather_app/features/weather/presentation/pages/multi_region_screen.dart';
 import 'package:weather_app/utils/utils.dart';
@@ -43,6 +46,21 @@ class _HomeState extends State<Home> {
                     });
                   },
                   child: const Text("Multi Region Forecast")),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: ElevatedButton(
+                      child: const Text('Logout'),
+                      onPressed: () {
+                        sl<AuthCubit>().logout();
+                        context.pushReplacementNamed(Routes.login.path);
+                      },
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),
