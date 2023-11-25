@@ -27,7 +27,10 @@ class WeatherApp extends StatelessWidget {
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.brown,
-            )),
+            ),
+            scaffoldBackgroundColor: Colors.brown.shade100,
+            appBarTheme: AppBarTheme(color: Colors.brown.shade100),
+            canvasColor: Colors.brown.shade100),
         routes: routes,
       ),
     );

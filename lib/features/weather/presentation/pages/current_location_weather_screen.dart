@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/core.dart';
 import 'package:weather_app/dependencies_injection.dart';
-import 'package:weather_app/features/weather/presentation/cubit/current_weather/current_weather_cubit.dart';
+import 'package:weather_app/features/features.dart';
 
 class CurrentLocationWeatherScreen extends StatelessWidget {
   const CurrentLocationWeatherScreen({super.key});
@@ -71,6 +71,9 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                          const Divider(
+                            height: 8,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -83,6 +86,9 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
                                 style: const TextStyle(fontSize: 25),
                               ),
                             ],
+                          ),
+                          const Divider(
+                            height: 8,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,6 +106,15 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
+                        builder: (context, state) {
+                      if (state is HourlyForecastSuccess) {
+                        return HourlyForecastWidget(
+                          hourlyForecast: state.hourlyForecastEntity!,
+                        );
+                      }
+                      return const SizedBox();
+                    })
                   ],
                 ),
               );

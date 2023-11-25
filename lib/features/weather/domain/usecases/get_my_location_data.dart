@@ -4,7 +4,7 @@ import 'package:weather_app/core/usecase/usecase.dart';
 import 'package:weather_app/features/weather/domain/entities/local_location.dart';
 import 'package:weather_app/features/weather/domain/repository/repository.dart';
 
-class GetMyLocationDataUseCase extends UseCase<LocalLocationEntity, void> {
+class GetMyLocationDataUseCase implements UseCase<LocalLocationEntity, void> {
   final WeatherRepository _repo;
 
   GetMyLocationDataUseCase(this._repo);

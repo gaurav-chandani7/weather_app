@@ -1,1 +1,1 @@
-export 'forecast_widget.dart';
+export 'hourly_forecast_widget.dart';

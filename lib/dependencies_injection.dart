@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:location/location.dart';
 import 'package:weather_app/features/features.dart';
+import 'package:weather_app/features/weather/domain/usecases/get_hourly_forecast.dart';
 
 GetIt sl = GetIt.instance;
 
@@ -36,10 +37,11 @@ void _useCase() {
   sl.registerFactory(() => CheckLoggedInAndGetDetailsUseCase(sl()));
   sl.registerFactory(() => GetMyLocationDataUseCase(sl()));
   sl.registerFactory(() => GetCurrentWeatherUseCase(sl()));
+  sl.registerFactory(() => GetHourlyForecast(sl()));
 }
 
 void _cubit() {
   sl.registerLazySingleton(() => AuthCubit(sl(), sl(), sl()));
   sl.registerFactory(() => RegisterCubit(sl()));
-  sl.registerFactory(() => CurrentWeatherCubit(sl(), sl()));
+  sl.registerFactory(() => CurrentWeatherCubit(sl(), sl(), sl()));
 }
