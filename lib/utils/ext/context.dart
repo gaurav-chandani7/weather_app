@@ -42,4 +42,8 @@ extension ContextExtensions on BuildContext {
   void pushReplacementNamed(String routeName, {Object? args}) {
     Navigator.of(this).pushReplacementNamed(routeName);
   }
+
+  void pushNamed(String routeName, {Object? args}) {
+    Navigator.of(this).pushNamed(routeName);
+  }
 }

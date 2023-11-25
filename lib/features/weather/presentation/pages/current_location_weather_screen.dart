@@ -66,7 +66,7 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
                                 style: TextStyle(fontSize: 25),
                               ),
                               Text(
-                                "${currentWeather.main.humidity}%",
+                                "${currentWeather.main.humidity.round()}%",
                                 style: const TextStyle(fontSize: 25),
                               ),
                             ],

@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/dependencies_injection.dart';
 import 'package:weather_app/features/auth/presentation/presentation.dart';
 import 'package:weather_app/features/weather/presentation/pages/home.dart';
+import 'package:weather_app/features/weather/presentation/pages/multi_region_screen.dart';
 import 'package:weather_app/utils/utils.dart';
 
 enum Routes {
   root('/'),
 
   home('/home'),
+  multiRegion('/home/multiRegion'),
 
   login("/auth/login"),
   register("/auth/register");
@@ -41,5 +43,6 @@ Map<String, WidgetBuilder> routes = {
   //             child: const Text("Logout")),
   //       ),
   //     )
-  Routes.home.path: (context) => const Home()
+  Routes.home.path: (context) => const Home(),
+  Routes.multiRegion.path: (context) => const MultiRegionScreen()
 };
