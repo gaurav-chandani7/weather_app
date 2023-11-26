@@ -53,9 +53,7 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
               );
             }
             if (hourlyWidgetState is HourlyForecastLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const HourlyForecastShimmer();
             }
             return const SizedBox();
           }),
@@ -65,6 +63,9 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
             if (dailyWidgetState is DailyForecastSuccess) {
               return DailyForecastWidget(
                   dailyForecast: dailyWidgetState.dailyForecastEntity);
+            }
+            if (dailyWidgetState is DailyForecastLoading) {
+              return const DailyForecastShimmer();
             }
             return const SizedBox();
           })
