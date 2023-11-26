@@ -18,13 +18,13 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
   LocationParams? locationParamsData;
 
   requestLocationAndGetWeather() async {
+    emit(CurrentWeatherLoading());
     var locationData = await _getMyLocationData(null);
     locationData.fold((failure) {
       _requestLocationFailure(failure);
     }, (locationData) async {
       locationParamsData = LocationParams(
           lat: locationData.latitude, lon: locationData.longitude);
-      emit(CurrentWeatherLoading());
       _getWeather(locationParamsData!);
     });
   }
