@@ -1,6 +1,7 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:weather_app/core/constants/url_constants.dart';
 import 'package:weather_app/core/error/error.dart';
 import 'package:weather_app/features/weather/data/models/models.dart';
 import 'package:weather_app/features/weather/domain/entities/location_params.dart';
@@ -20,14 +21,18 @@ class OpenWeatherMapDataSourceImpl implements OpenWeatherMapDataSource {
   Future<Either<Failure, CurrentWeatherModel>> getCurrentWeather(
       LocationParams locationParams) async {
     String url =
-        "http://pro.openweathermap.org/data/2.5/weather?lat=${locationParams.lat}&lon=${locationParams.lon}&units=metric&APPID=a07648b17e65f5114b7536b117dc11eb";
+        "$baseApiUrl/weather?lat=${locationParams.lat}&lon=${locationParams.lon}&units=$unitsParamApi&APPID=$appId";
     try {
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         return Right(CurrentWeatherModel.fromJson(response.body));
       }
+      return Left(ServerFailure(
+          message: 'Server error: status code- ${response.statusCode}'));
     } catch (e) {
-      log(e.toString());
+      if (e is SocketException) {
+        return Left(NoInternetFailure());
+      }
     }
     return const Left(OtherFailure());
   }
@@ -36,14 +41,18 @@ class OpenWeatherMapDataSourceImpl implements OpenWeatherMapDataSource {
   Future<Either<Failure, HourlyForecastModel>> getHourlyForecast(
       LocationParams locationParams) async {
     String url =
-        "https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${locationParams.lat}&lon=${locationParams.lon}&units=metric&cnt=24&APPID=a07648b17e65f5114b7536b117dc11eb";
+        "$baseApiUrl/forecast/hourly?lat=${locationParams.lat}&lon=${locationParams.lon}&units=$unitsParamApi&cnt=$cntParamHourlyForecastApi&APPID=$appId";
     try {
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         return Right(HourlyForecastModel.fromJson(response.body));
       }
+      return Left(ServerFailure(
+          message: 'Server error: status code- ${response.statusCode}'));
     } catch (e) {
-      log(e.toString());
+      if (e is SocketException) {
+        return Left(NoInternetFailure());
+      }
     }
     return const Left(OtherFailure());
   }
@@ -52,14 +61,18 @@ class OpenWeatherMapDataSourceImpl implements OpenWeatherMapDataSource {
   Future<Either<Failure, DailyForecastModel>> getDailyForecast(
       LocationParams locationParams) async {
     String url =
-        "http://pro.openweathermap.org/data/2.5/forecast/daily?lat=${locationParams.lat}&lon=${locationParams.lon}&units=metric&cnt=7&APPID=a07648b17e65f5114b7536b117dc11eb";
+        "$baseApiUrl/forecast/daily?lat=${locationParams.lat}&lon=${locationParams.lon}&units=$unitsParamApi&cnt=$cntParamDailyForecastApi&APPID=$appId";
     try {
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         return Right(DailyForecastModel.fromJson(response.body));
       }
+      return Left(ServerFailure(
+          message: 'Server error: status code- ${response.statusCode}'));
     } catch (e) {
-      log(e.toString());
+      if (e is SocketException) {
+        return Left(NoInternetFailure());
+      }
     }
     return const Left(OtherFailure());
   }

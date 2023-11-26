@@ -18,7 +18,8 @@ class LocationDataSourceImpl implements LocationDataSource {
         var locationData = await _location.getLocation();
         return Right(locationData);
       }
-      return Left(PermissionFailure(permissionStatus.name));
+      return Left(
+          PermissionFailure(message: 'Permission ${permissionStatus.name}'));
     }
     return const Left(OtherFailure(message: 'Location service not enabled'));
   }

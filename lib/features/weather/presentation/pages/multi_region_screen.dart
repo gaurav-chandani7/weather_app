@@ -18,52 +18,61 @@ class MultiRegionScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is MultiRegionSuccess) {
             var data = state.listData!;
-            return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  var item = data[index];
-                  return InkWell(
-                    onTap: () {
-                      context.push(Parent(
-                        appBar: AppBar(),
-                        child: CurrentLocationWeatherScreen(
-                          locationParams: LocationParams(
-                              lat: item.coord.lat, lon: item.coord.lon),
-                        ),
-                      ));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            item.name ?? '',
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "${item.main.temp.round()}°C",
-                                style: const TextStyle(fontSize: 15),
-                              ),
-                              Image(
-                                image: NetworkImage(
-                                    "https://openweathermap.org/img/wn/${item.weather.first.icon}.png"),
-                                height: 50,
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                });
+            return _getMultiRegionListSuccessUI(data);
+          }
+          if (state is MultiRegionLoading) {}
+          if (state is MultiRegionFailure) {
+            return CommonPageErrorWidget(
+              message: state.message,
+            );
           }
           return const SizedBox();
         },
       )),
     );
+  }
+
+  ListView _getMultiRegionListSuccessUI(List<CurrentWeatherEntity> data) {
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          var item = data[index];
+          return InkWell(
+            onTap: () {
+              context.push(Parent(
+                appBar: AppBar(),
+                child: CurrentLocationWeatherScreen(
+                  locationParams:
+                      LocationParams(lat: item.coord.lat, lon: item.coord.lon),
+                ),
+              ));
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    item.name ?? '',
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "${item.main.temp.round()}°C",
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                      Image(
+                        image: NetworkImage(
+                            "https://openweathermap.org/img/wn/${item.weather.first.icon}.png"),
+                        height: 50,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

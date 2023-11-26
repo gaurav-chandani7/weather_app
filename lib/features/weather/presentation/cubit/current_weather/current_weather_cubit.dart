@@ -38,7 +38,8 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
   _getWeather(LocationParams locationData) async {
     var res = await _getCurrentWeatherUseCase(locationData);
     res.fold(
-        (apiFailure) => emit(const CurrentWeatherFailure('Unable to get data')),
+        (apiFailure) => emit(
+            CurrentWeatherFailure(apiFailure.message ?? 'Unable to get data')),
         (weatherData) {
       emit(CurrentWeatherSuccess(currentWeatherEntity: weatherData));
       _getHourlyForecast();
@@ -49,7 +50,8 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
 
   _requestLocationFailure(failure) {
     if (failure is PermissionFailure) {
-      emit(CurrentWeatherFailure(failure.message));
+      emit(const CurrentWeatherFailure(
+          'Permission Denied! \nUnable to get weather for your location. However you can always visit Multi region weather.'));
     } else if (failure is OtherFailure) {
       emit(CurrentWeatherFailure(failure.message));
     } else {

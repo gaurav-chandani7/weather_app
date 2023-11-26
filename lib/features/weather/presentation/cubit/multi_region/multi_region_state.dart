@@ -3,8 +3,9 @@ part of 'multi_region_cubit.dart';
 @immutable
 sealed class MultiRegionState {
   final List<CurrentWeatherEntity>? listData;
+  final String? message;
 
-  const MultiRegionState({this.listData});
+  const MultiRegionState({this.listData, this.message});
 }
 
 final class MultiRegionInitial extends MultiRegionState {}
@@ -16,7 +17,5 @@ final class MultiRegionSuccess extends MultiRegionState {
 }
 
 final class MultiRegionFailure extends MultiRegionState {
-  final String? message;
-
-  const MultiRegionFailure(this.message);
+  const MultiRegionFailure({super.message});
 }

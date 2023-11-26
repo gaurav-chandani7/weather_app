@@ -1,10 +1,17 @@
 abstract class Failure {
-  const Failure();
+  final String? message;
+  const Failure({this.message});
+}
+
+class NoInternetFailure extends Failure {
+  NoInternetFailure({
+    super.message =
+        'No Internet Connection. \nPlease make sure you have a stable connection.',
+  });
 }
 
 class ServerFailure extends Failure {
-  final String? message;
-  const ServerFailure({this.message});
+  const ServerFailure({super.message});
 }
 
 class NoDataFailure extends Failure {}
@@ -12,12 +19,9 @@ class NoDataFailure extends Failure {}
 class CacheFailure extends Failure {}
 
 class PermissionFailure extends Failure {
-  final String? message;
-
-  PermissionFailure(this.message);
+  PermissionFailure({super.message});
 }
 
 class OtherFailure extends Failure {
-  final String? message;
-  const OtherFailure({this.message});
+  const OtherFailure({super.message});
 }
