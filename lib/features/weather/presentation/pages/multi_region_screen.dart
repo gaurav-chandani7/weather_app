@@ -20,7 +20,9 @@ class MultiRegionScreen extends StatelessWidget {
             var data = state.listData!;
             return _getMultiRegionListSuccessUI(data);
           }
-          if (state is MultiRegionLoading) {}
+          if (state is MultiRegionLoading) {
+            return const MultiRegionListPageShimmer();
+          }
           if (state is MultiRegionFailure) {
             return CommonPageErrorWidget(
               message: state.message,

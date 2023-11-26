@@ -25,7 +25,7 @@ class CurrentLocationWeatherScreen extends StatelessWidget {
             return _getCurrentWeatherPageSuccessUI(currentWeather);
           }
           if (state is CurrentWeatherLoading) {
-            return const Center(child: CircularProgressIndicator.adaptive());
+            return const CurrentWeatherPageShimmer();
           }
           if (state is CurrentWeatherFailure) {
             return CommonPageErrorWidget(

@@ -38,7 +38,7 @@ final class CurrentWeatherSuccess extends CurrentWeatherState {
 final class CurrentWeatherFailure extends CurrentWeatherState {
   final String? message;
 
-  const CurrentWeatherFailure(this.message) : super(errorMessage: message);
+  const CurrentWeatherFailure({this.message}) : super(errorMessage: message);
 }
 
 //Hourly Forecast Widget states

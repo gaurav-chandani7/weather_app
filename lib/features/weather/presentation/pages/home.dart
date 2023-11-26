@@ -27,41 +27,78 @@ class _HomeState extends State<Home> {
     return Parent(
         appBar: AppBar(),
         drawer: Drawer(
-          child: Column(
-            children: [
-              const DrawerHeader(child: Text("Weather app")),
-              ElevatedButton(
-                  onPressed: () {
-                    context.dismiss();
-                    setState(() {
-                      _activePage = 0;
-                    });
-                  },
-                  child: const Text("My Location")),
-              ElevatedButton(
-                  onPressed: () {
-                    context.dismiss();
-                    setState(() {
-                      _activePage = 1;
-                    });
-                  },
-                  child: const Text("Multi Region Forecast")),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: ElevatedButton(
-                      child: const Text('Logout'),
-                      onPressed: () {
-                        sl<AuthCubit>().logout();
-                        context.pushReplacementNamed(Routes.login.path);
-                      },
-                    ),
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const DrawerHeader(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.sunny_snowing,
+                        size: 24,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Weather app",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
                 ),
-              )
-            ],
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                          onPressed: () {
+                            context.dismiss();
+                            setState(() {
+                              _activePage = 0;
+                            });
+                          },
+                          style: const ButtonStyle(
+                              alignment: Alignment.centerLeft),
+                          child: const Text("My Location")),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                          onPressed: () {
+                            context.dismiss();
+                            setState(() {
+                              _activePage = 1;
+                            });
+                          },
+                          style: const ButtonStyle(
+                              alignment: Alignment.centerLeft),
+                          child: const Text("Multi Region Forecast")),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: ElevatedButton(
+                        child: const Text('Logout'),
+                        onPressed: () {
+                          sl<AuthCubit>().logout();
+                          context.pushReplacementNamed(Routes.login.path);
+                        },
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         child: _pages[_activePage]);
