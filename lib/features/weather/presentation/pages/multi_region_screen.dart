@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/core/widgets/widgets.dart';
+import 'package:weather_app/core/core.dart';
 import 'package:weather_app/dependencies_injection.dart';
 import 'package:weather_app/features/features.dart';
 import 'package:weather_app/features/weather/presentation/cubit/multi_region/multi_region_cubit.dart';
@@ -66,7 +66,7 @@ class MultiRegionScreen extends StatelessWidget {
                       ),
                       Image(
                         image: NetworkImage(
-                            "https://openweathermap.org/img/wn/${item.weather.first.icon}.png"),
+                            "$iconBaseUrl/${item.weather.first.icon}.png"),
                         height: 50,
                       ),
                     ],

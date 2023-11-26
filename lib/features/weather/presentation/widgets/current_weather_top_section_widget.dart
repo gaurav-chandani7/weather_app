@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/core.dart';
 import 'package:weather_app/features/weather/domain/entities/current_weather.dart';
 
 class CurrentWeatherTopSectionWidget extends StatelessWidget {
@@ -23,9 +24,8 @@ class CurrentWeatherTopSectionWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Image(
-              image: NetworkImage(
-                  "https://openweathermap.org/img/wn/${currentWeather.weather.first.icon}@4x.png"),
+            Image.network(
+              "$iconBaseUrl/${currentWeather.weather.first.icon}@4x.png",
             ),
             Column(
               children: [

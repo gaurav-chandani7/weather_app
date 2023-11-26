@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/core.dart';
 import 'package:weather_app/features/weather/domain/entities/daily_forecast.dart';
 
 class DailyForecastWidget extends StatelessWidget {
@@ -73,7 +74,7 @@ class DailyForecastWidget extends StatelessWidget {
                             style: const TextStyle(fontSize: 15),
                           ),
                           Image.network(
-                              "https://openweathermap.org/img/wn/${item.weather.first.icon}.png"),
+                              "$iconBaseUrl/${item.weather.first.icon}.png"),
                           Text(
                             "${item.temp.min.round()}° - ${item.temp.max.round()}°",
                             style: const TextStyle(fontSize: 15),

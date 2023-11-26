@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/core.dart';
 import 'package:weather_app/features/weather/domain/entities/hourly_forecast.dart';
 
 class HourlyForecastWidget extends StatelessWidget {
@@ -77,7 +78,7 @@ class HourlyForecastWidget extends StatelessWidget {
                                     : null),
                           ),
                           Image.network(
-                              "https://openweathermap.org/img/wn/${item.weather.first.icon}.png"),
+                              "$iconBaseUrl/${item.weather.first.icon}.png"),
                           Text("${item.main.temp.round()}°")
                         ],
                       ),
